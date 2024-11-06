@@ -1,61 +1,44 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-int fibonacci(int n)
-{
-    if (n <= 1)
+int fibonacci_recursive(int n) {
+    if (n <= 1) {
         return n;
-
-    return fibonacci(n - 1) + fibonacci(n - 2);
-}
-
-/**
- * Time Complexity: O(2^n)
- * For each call fibonacci(n), it recursively calls fibonacci(n-1) and fibonacci(n-2). 
- * This creates a tree of recursive calls where each node represents a function call.
- * The size of this recursive call tree is exponential, and the time complexity is O(2^n) 
- * because for each n, you essentially have two branches (n-1 and n-2).
-
- * Space Complexity: O(n)
- * The recursion depth is proportional to n because it will reach the base case after n 
- * recursive calls. Since there is no extra memory allocated except for the recursive call 
- * stack, the space complexity is linear.
- */
-void recursive(int n)
-{
-    for (int i = 0; i < n; ++i)
-        cout << fibonacci(i) << " ";
-}
-
-/**
- * Time Complexity: O(n)
- * Space Complexity: O(1)
- */
-void iterative(int n)
-{
-    int a1 = 0;
-    int a2 = 1;
-
-    cout << a1 << " " << a2 << " ";
-
-    for (int i = 2; i < n; i++)
-    {
-        int a3 = a2 + a1;
-        a1 = a2;
-        a2 = a3;
-        cout << a2 << " ";
     }
-
-    cout << endl;
+    return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2);
 }
 
-int main()
-{
+int fibonacci_iterative(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    
+    int a = 0, b = 1, fib = 0;
+    for (int i = 2; i <= n; i++) {
+        fib = a + b;
+        a = b;
+        b = fib;
+    }
+    return b;
+}
+
+int main() {
     int n;
-    cout<<"Enter the number of terms"<<endl;
-    cin>>n;
-    recursive(n);
-    cout << endl;
-    iterative(n);
+    cout << "Enter the position (0-indexed) of the Fibonacci number: ";
+    cin >> n;
+
+    cout << "Fibonacci number at index " << n << " (recursive) is " << fibonacci_recursive(n) << endl;
+    cout << "Fibonacci number at index " << n << " (iterative) is " << fibonacci_iterative(n) << endl;
+
     return 0;
 }
+
+/* Recursive : 
+TC : O(2^n)
+SC : O(n)  Recursion stack */
+
+/* Iterative : 
+TC : O(n)
+SC : O(1) */
+
+// 0 1 1 2 3 5 8
